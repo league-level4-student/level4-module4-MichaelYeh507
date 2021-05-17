@@ -7,20 +7,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+@SuppressWarnings("serial")
 public class PolymorphWindow extends JPanel implements ActionListener, MouseListener{
     public static final int WIDTH = 900;
     public static final int HEIGHT = 600;
     
     private JFrame window;
     private Timer timer;
-    ArrayList<Polymorph> array = new ArrayList<Polymorph>();
+    
+    Polymorph[] polyList;
     
     public static void main(String[] args) {
    	 new PolymorphWindow().buildWindow();
@@ -31,45 +32,52 @@ public class PolymorphWindow extends JPanel implements ActionListener, MouseList
    	 window.add(this);
    	 window.getContentPane().setPreferredSize(new Dimension(500, 500));
    	 window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+   	 addMouseListener(this);
+   	 
+   	 polyList = new Polymorph[]{new BluePolymorph(50, 50), 
+//   			 					new RedMorph(100, 100),
+//   			 					new MovingMorph(150, 100),
+   			 					new CircleMorph(100, 0),
+   			 					new FollowMorph(0, 0),
+//   			 					new ImageMorph(200, 200),
+//   			 					new MessageMorph(300, 200)};
+   	 
    	 window.pack();
    	 window.setVisible(true);
-   	 window.addMouseListener(this);
-   	 
    	 timer = new Timer(1000 / 30, this);
    	 timer.start();
-   	 
-   	 array.add(new RedPolymorph(10,10,50,50));
-   	 array.add(new CircleMorph(250,250,50,50));
-   	 array.add(new MouseMorph(0,0,50,50));
-   	 array.add(new BluePolymorph(100,10,50,50));
-   	 array.add(new MessageMorph(200,50,50,50));
     }
     
     public void paintComponent(Graphics g){
     //draw background
    	 g.setColor(Color.LIGHT_GRAY);
    	 g.fillRect(0, 0, 500, 500);
+   	
    	 //draw polymorph
-   	 for (Polymorph polymorph : array) {
-		polymorph.draw(g);
-	}
+   	 for(int i = 0; i < polyList.length; i++) {
+   		 polyList[i].draw(g);
+   	 }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-   	 repaint();
-   	 //update polymorph
-   	 for (Polymorph polymorph : array) {
-		polymorph.update();
-	}
+    	repaint();
+    	for(int i = 0; i < polyList.length; i++) {
+    	  	polyList[i].update();
+    	}
     }
 
 	@Override
-	public void mouseClicked(MouseEvent arg0) {
+	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		if(arg0.getX() >= array.get(4).x +10 && arg0.getX() <= array.get(4).x+10 + array.get(4).width
-		   && arg0.getY() >= array.get(4).y+37 && arg0.getY() <= array.get(4).y+37 + array.get(4).height) {
-				JOptionPane.showMessageDialog(null, "I am orange");
+		for(int i = 0; i < polyList.length; i++) {
+			if(polyList[i] instanceof MessageMorph) {
+				if(e.getX() >= polyList[i].getX() && e.getX() < polyList[i].getX() + polyList[i].getWidth()) {
+					if(e.getY() >= polyList[i].getY() && e.getY() < polyList[i].getY() + polyList[i].getHeight()) {
+						JOptionPane.showMessageDialog(null, "MessageMorph Clicked");
+					}
+				}
+			}
 		}
 	}
 
