@@ -35,12 +35,12 @@ public class PolymorphWindow extends JPanel implements ActionListener, MouseList
    	 addMouseListener(this);
    	 
    	 polyList = new Polymorph[]{new BluePolymorph(50, 50), 
-//   			 					new RedMorph(100, 100),
-//   			 					new MovingMorph(150, 100),
+   			 					new RedMorph(100, 100),
+   			 					new MovingMorph(150, 100),
    			 					new CircleMorph(100, 0),
    			 					new FollowMorph(0, 0),
-//   			 					new ImageMorph(200, 200),
-//   			 					new MessageMorph(300, 200)};
+   			 					new ImageMorph(200, 200),
+   			 					new MessageMorph(300, 200)};
    	 
    	 window.pack();
    	 window.setVisible(true);

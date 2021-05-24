@@ -13,7 +13,7 @@ public class ImageMorph extends Polymorph{
 	ImageMorph(int x, int y) {
 		super(x, y);
 		try {
-			img = ImageIO.read(new File("src/_03_polymorphs/DogImage.jpg"));
+			img = ImageIO.read(new File("src/_03_polymorphs/cuteDog.jpg"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
